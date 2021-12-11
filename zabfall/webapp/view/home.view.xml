@@ -1,0 +1,25 @@
+<mvc:View controllerName="zabfall.zabfall.controller.home" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" height="100%">
+<!--	<Shell id="shell">
+		<App id="app">
+			<pages>-->
+				<Page id="page" title="Fallour Message">
+					<content>
+					<!--	<HBox renderType="Bare"/>-->
+						<Label text="Product Id" labelFor="idInput"/>
+						<Input id="idInput" value="{contextModel>/context/productId}"/> 
+					<!--	</HBox>-->
+					</content>
+					<footer>
+				    <OverflowToolbar class="sapContrast sapContrastPlus" width="100%" id="toolbar3">
+				        <content>
+				            <ToolbarSpacer id="spacer2"/>
+				            <Button icon="sap-icon://cancel" iconFirst="false" id="button6" type="Reject" text="Cancel Run" press=".onCancelRun"/>
+				            <Button icon="sap-icon://refresh" iconFirst="false"  id="button5" type="Accept" text="Reprocess" press=".onReporcess"/>
+				        </content>
+				    </OverflowToolbar>
+				</footer>
+				</Page>
+		<!--	</pages>
+		</App>
+	</Shell>-->
+</mvc:View>

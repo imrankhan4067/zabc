@@ -1,0 +1,29 @@
+{
+  "welcomeFile": "/zzazza/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
+  "routes": [
+  {
+		"authenticationType": "none",
+		"csrfProtection": false,
+		"source": "^/V2/(.*)$",
+		"target": "$1",
+		"destination": "Northwind"
+},
+{
+    "source": "^/bpmworkflowruntime/(.*)$",
+    "target": "/$1",
+    "service": "com.sap.bpm.workflow",
+    "endpoint": "workflow_rest_url",
+    "authenticationType": "xsuaa"
+},
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

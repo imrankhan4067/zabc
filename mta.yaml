@@ -1,0 +1,90 @@
+ID: zabc
+_schema-version: '2.1'
+parameters:
+  deploy_mode: html5-repo
+version: 0.0.1
+modules:
+  - name: zabc-approuter
+    type: approuter.nodejs
+    path: zabc-approuter
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: zabc_html5_repo_runtime
+      - name: dest_zabc
+      - name: workflow_zabc
+      - name: uaa_zabc
+  - name: zabc_ui_deployer
+    type: com.sap.html5.application-content
+    path: zabc_ui_deployer
+    requires:
+      - name: zabc_html5_repo_host
+    build-parameters:
+      requires:
+        - name: zza
+          artifacts:
+            - './*'
+          target-path: resources/zza
+        - name: zabfall
+          artifacts:
+            - './*'
+          target-path: resources/zabfall
+  - name: zza
+    type: html5
+    path: zza
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+    requires:
+      - name: workflow_zabc
+      - name: dest_zabc
+  - name: zab_wf
+    type: com.sap.application.content
+    path: zab_wf
+    requires:
+      - name: workflow_zabc
+        parameters:
+          content-target: true
+      - name: dest_zabc
+  - name: zabfall
+    type: html5
+    path: zabfall
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      supported-platforms: []
+      build-result: dist
+resources:
+  - name: zabc_html5_repo_runtime
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: zabc_html5_repo_host
+    parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service
+  - name: uaa_zabc
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa
+    type: org.cloudfoundry.managed-service
+  - name: dest_zabc
+    parameters:
+      service-plan: lite
+      service: destination
+    type: org.cloudfoundry.managed-service
+  - name: workflow_zabc
+    parameters:
+      service-plan: lite
+      service: workflow
+    type: org.cloudfoundry.managed-service
